@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Sirenix.OdinInspector;
 
 public class GameManager : MonoBehaviour
 { 
@@ -16,7 +17,7 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Questions")]
-    public List<GameObject> questionList;
+    [AssetsOnly] public List<GameObject> questionList;
     public int questionStartingNumber;
     [HideInInspector] public int questionNumber;
     private QuestionGeneric currentQuestion;

@@ -65,17 +65,11 @@ public class QuestionGeneric : MonoBehaviour
     private void ClickAnswerWrong(AnswerGeneric answer)
     {
         GameManager.Instance.FadeImageColor(colourIncorrect, 0.25f, answer.frontImage);
-
-        StartCoroutine(RestartQuestion());
-
-        onFail?.Invoke();
     }
 
     private void ClickAnswerCorrect(AnswerGeneric answer)
     {
         GameManager.Instance.FadeImageColor(colourCorrect, 0.25f, answer.frontImage);
-
-        Invoke("NextQuestion", 1.5f);
     }
 
     public void ClickAnswerGenericEvent(AnswerGeneric answer)
@@ -92,13 +86,13 @@ public class QuestionGeneric : MonoBehaviour
         if(correct) 
         {
             ClickAnswerCorrect(answer);
+            GenericAnswerCorrect();
         }
         else
         {
             ClickAnswerWrong(answer);
+            GenericAnswerWrong();
         }
-
-        GenericAnswer();
     }
 
     public void GenericAnswer()
@@ -123,6 +117,8 @@ public class QuestionGeneric : MonoBehaviour
     public void GenericAnswerWrong()
     {
         GenericAnswer();
+
+        onFail?.Invoke();
 
         StartCoroutine(RestartQuestion());
     }
