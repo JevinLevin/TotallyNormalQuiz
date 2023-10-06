@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Sirenix.OdinInspector;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 { 
@@ -101,6 +102,12 @@ public class GameManager : MonoBehaviour
     public void FadeImageColor(Color fadeColor, float fadeInTime, Image image)
     {
         image.DOColor(fadeColor, fadeInTime).SetId("answerTween");
+
+    }
+
+    public void FadeImageColor(Color fadeColor, float fadeInTime, TextMeshProUGUI text)
+    {
+        text.DOColor(fadeColor, fadeInTime).SetId("answerTween");
 
     }
 

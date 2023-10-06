@@ -25,8 +25,11 @@ public class ButtonAnimations : MonoBehaviour
 
     public void OnHover()
     {
-        DOTween.Kill(buttonImage);
-        buttonImage.DOColor(hoverButtonColor, 0.1f).SetEase(Ease.OutSine).SetId("hoverTween");
+        if(!GameManager.Instance.restarting)
+        {
+            DOTween.Kill(buttonImage);
+            buttonImage.DOColor(hoverButtonColor, 0.1f).SetEase(Ease.OutSine).SetId("hoverTween");
+        }
         
     }
 
