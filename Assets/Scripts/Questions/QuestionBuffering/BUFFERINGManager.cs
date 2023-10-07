@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class BUFFERINGManager : MonoBehaviour
 {
@@ -12,10 +13,11 @@ public class BUFFERINGManager : MonoBehaviour
     [SerializeField] private BUFFERINGAnswer[] answers;
     [SerializeField] private GameObject skip;
     [SerializeField] private CanvasGroup skipCanvasGroup;
+    [SerializeField] private Image skipImage;
     private bool buffering;
     void Update()
     {
-        if(Application.internetReachability == NetworkReachability.NotReachable && buffering)
+        if(!InternetAvailability.IsInternetAvailable() && buffering)
             {
                 DownloadFailed();
                 buffering = false;
@@ -54,6 +56,8 @@ public class BUFFERINGManager : MonoBehaviour
 
     public void ClickAnswer()
     {
+        GameManager.Instance.FadeImageColor(GameManager.Instance.buttonGreen, 0.25f, skipImage);
+
         questionScript.GenericAnswerCorrect();
     }
 }
