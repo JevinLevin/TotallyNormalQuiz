@@ -10,14 +10,13 @@ public class COUNTDOWNManager : MonoBehaviour
 
     private bool countdown;
     private float countdownTimer;
-    private int currentPhaseNumber;
     private Color defaultCountdownBarColor;
 
-    [SerializeField] private List<COUNTDOWNPhaseScriptableObject> phases;
+
     [Title("Components")]
-    [SerializeField] private QuestionGeneric questionScript;
-    [SerializeField] private Image countdownBar;
+    [SerializeField] private QuestionGenericMulti questionMultiScript;
     [SerializeField] private TextMeshProUGUI phaseNumberDisplay;
+    [SerializeField] private Image countdownBar;
     [Title("Attributes")]
     [SerializeField]
     private float countdownMax;
@@ -37,18 +36,19 @@ public class COUNTDOWNManager : MonoBehaviour
             countdownTimer += Time.deltaTime;
             if(countdownTimer > countdownMax)
             {
-                CountdownFail();
+                questionMultiScript.QuestionFail();
             }
         }
     }
-   
+
+    public void SetPhaseNumber()
+    {
+        phaseNumberDisplay.text = questionMultiScript.currentPhaseNumber.ToString();
+    }   
     public void CountdownReset()
     {
         countdown = false;
         countdownTimer = 0.0f;
-        currentPhaseNumber = phases.Count-1;
-
-        DisplayQuestion();
         ResetCountdownBar();
     }
 
@@ -57,107 +57,29 @@ public class COUNTDOWNManager : MonoBehaviour
         countdown = true;
     }
 
-    private void CountdownEnd()
+    public void CountdownEnd()
     {
         countdown = false;
         
     }
 
-    private void CountdownWin()
+    public void CountdownWin()
     {
-        FlashAnswers(GameManager.Instance.buttonGreen);
-
+        GameManager.Instance.FlashImageColor(GameManager.Instance.buttonGreen, 0.25f, countdownBar);
         phaseNumberDisplay.text = "-";
-        questionScript.SetQuestionTitle("VICTORY!!!");
-        FadeAnswerText();
-        
-        questionScript.GenericAnswerCorrect();
     }
 
-    private void CountdownFail()
+    public void CountdownFail()
     {
         CountdownEnd();
 
-        FadeAnswers(GameManager.Instance.buttonRed);
-
-        questionScript.GenericAnswerWrong();
+        GameManager.Instance.FadeImageColor(GameManager.Instance.buttonRed, 0.15f, countdownBar);
     }
 
-    public void ClickAnswer(AnswerGeneric answer)
+    public void CountdownCorrect()
     {
-        if(answer.GetCorrect()) CorrectAnswer();
-        else WrongAnswer();
-    }
-
-    private void CorrectAnswer()
-    {
-        //answer.SetDefaultColors();
-        currentPhaseNumber--;
-
-        if(currentPhaseNumber < 0)
-        {
-            CountdownWin();
-        }
-        else
-        {
-            DisplayQuestion();
-            countdownTimer = Mathf.Clamp(countdownTimer - correctBonus, 0, countdownMax);
-            FadeAnswersInOut(GameManager.Instance.buttonGreen);
-        }
-    }
-
-    private void WrongAnswer()
-    {
-        CountdownFail();
-    }
-
-    private void FadeAnswersInOut(Color fadeColor)
-    {
-        foreach(AnswerGeneric answer in questionScript.answers)
-        {
-            GameManager.Instance.FadeImageColorInOut(fadeColor, 0.25f, 0.5f, answer.backImage);
-        }
-        GameManager.Instance.FadeImageColorInOut(fadeColor, 0.25f, 0.5f, countdownBar);
-    }
-
-    private void FadeAnswers(Color fadeColor)
-    {
-        foreach(AnswerGeneric answer in questionScript.answers)
-        {
-            GameManager.Instance.FadeImageColor(fadeColor, 0.15f, answer.backImage);
-        }
-        GameManager.Instance.FadeImageColor(fadeColor, 0.15f, countdownBar);
-    }
-
-    private void FadeAnswerText()
-    {
-        foreach(AnswerGeneric answer in questionScript.answers)
-        {
-           answer.FadeText(0.25f);
-        }
-    }
-
-    private void FlashAnswers(Color fadeColor)
-    {
-        foreach(AnswerGeneric answer in questionScript.answers)
-        {
-            GameManager.Instance.FlashImageColor(fadeColor, 0.25f, answer.backImage);
-        }
-        GameManager.Instance.FlashImageColor(fadeColor, 0.25f, countdownBar);
-    }
-
-    private void DisplayQuestion()
-    {
-        COUNTDOWNPhaseScriptableObject currentPhase = phases[currentPhaseNumber];
-        List<COUNTDOWNAnswer> tempAnswers = currentPhase.answers;
-        tempAnswers.Shuffle();
-        phaseNumberDisplay.text = currentPhaseNumber.ToString();
-
-        for(int i = 0; i < questionScript.answers.Count; i++)
-        {
-            questionScript.answers[i].SetText(tempAnswers[i].answer);
-            questionScript.answers[i].SetCorrect(tempAnswers[i].correct);
-        }
+        countdownTimer = Mathf.Clamp(countdownTimer - correctBonus, 0, countdownMax);
+        GameManager.Instance.FadeImageColorInOut(GameManager.Instance.buttonGreen, 0.25f, 0.5f, countdownBar);
     }
 
     private void SetCountdownBar()

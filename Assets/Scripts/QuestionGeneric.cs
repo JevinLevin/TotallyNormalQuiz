@@ -34,14 +34,11 @@ public class QuestionGeneric : MonoBehaviour
 
     private AnswerGeneric clickedAnswer;
 
-    void Awake()
-    {
-        onReset?.Invoke();
-        onStart?.Invoke();
-    }
 
     void Start()
     {
+        onReset?.Invoke();
+        onStart?.Invoke();
         Reset();
     }
 
