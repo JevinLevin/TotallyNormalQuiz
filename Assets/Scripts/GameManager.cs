@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Sirenix.OdinInspector;
 using TMPro;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 { 
@@ -16,6 +18,10 @@ public class GameManager : MonoBehaviour
         get { return _instance; } 
     }
 
+    [Header("Components")] 
+    [SerializeField] private AudioMixer audioMixer;
+
+    [SerializeField] private QuitAnimation quitAnimation;
     [Header("Objects")] 
     [SerializeField] private PauseMenu pauseMenu;
 
@@ -39,10 +45,14 @@ public class GameManager : MonoBehaviour
     public Color buttonAqua;
     public Color buttonPurple;
 
+    [Header("Values")] 
+
     [ClearOnReload]
     public static bool paused;
     [ClearOnReload(valueToAssign:true)]
     public static bool canPause = true;
+
+    public static float volume;
 
 
     private Sequence flashSequence;
@@ -77,9 +87,13 @@ public class GameManager : MonoBehaviour
         currentQuestion = GameObject.FindWithTag("Question").GetComponent<QuestionGeneric>();
        }
 
+       float currentVolume;
+       audioMixer.GetFloat("MasterVolume", out currentVolume);
+       volume = NormaliseVolume(currentVolume);
+
     }
 
-    private void OnPause()
+    public void OnPause()
     {
         paused = !paused;
         
@@ -144,5 +158,28 @@ public class GameManager : MonoBehaviour
         flashSequence.SetId("answerTween").SetLoops(-1);
         flashSequence.Play();
 
+    }
+
+    public void SetVolume(Single value)
+    {
+        volume = value;
+        audioMixer.SetFloat(("MasterVolume"), UnormaliseVolume(value));
+
+    }
+
+    private float NormaliseVolume(float value)
+    {
+        return (value + 80) / 80;
+    }
+    
+    private float UnormaliseVolume(float value)
+    {
+        return -80 - (value * -80);
+    }
+
+    public void QuitGame()
+    {
+        quitAnimation.gameObject.SetActive(true);
+        StartCoroutine(quitAnimation.PlayAnimation());
     }
 }

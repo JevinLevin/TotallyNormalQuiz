@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6379483221453412269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6811941004901808145}
+  - component: {fileID: 5848729926876645614}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6811941004901808145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6379483221453412269}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1020.624, y: 418.39706, z: -20.848942}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5848729926876645614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6379483221453412269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab7ea656314e4141a14d12e39b8d30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: fb60a0c7dcdffc141ae01eb4cd1ef301, type: 2}
+  pauseMenu: {fileID: 0}
+  questionList:
+  - {fileID: 1547728553881779374, guid: 19b55827481b3f845b08928b5bb8adc0, type: 3}
+  - {fileID: 7639171006679417732, guid: 8e27b44d18704e54187a3d16fe552add, type: 3}
+  - {fileID: 5781362146745486268, guid: 0bb339fe6d822a0459196860defc01ee, type: 3}
+  - {fileID: 622170178324091505, guid: 15f2dc671af19ad44a036ce0caa4f45f, type: 3}
+  - {fileID: 5523775348035873984, guid: 110c28435dec4e7458c86dd67e339be3, type: 3}
+  questionStartingNumber: 0
+  questionNumber: 0
+  restarting: 0
+  buttonHoverColor: {r: 0.64450574, g: 0.6517041, b: 0.745283, a: 1}
+  buttonRed: {r: 1, g: 0.49019608, b: 0.49019608, a: 1}
+  buttonBlue: {r: 0.49019608, g: 0.83137256, b: 1, a: 1}
+  buttonGreen: {r: 0.49019608, g: 1, b: 0.5764706, a: 1}
+  buttonYellow: {r: 0.9529412, g: 0.94509804, b: 0.49019608, a: 1}
+  buttonDarkBlue: {r: 0.49019608, g: 0.56143856, b: 0.9529412, a: 1}
+  buttonPink: {r: 1, g: 0.4901961, b: 0.96186036, a: 1}
+  buttonOrange: {r: 1, g: 0.739346, b: 0.4901961, a: 1}
+  buttonAqua: {r: 0.49411762, g: 1, b: 0.85666597, a: 1}
+  buttonPurple: {r: 0.6545758, g: 0.49019608, b: 0.9529412, a: 1}
+  quitDuration: 0.5
