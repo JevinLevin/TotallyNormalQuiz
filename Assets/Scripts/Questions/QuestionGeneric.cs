@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
@@ -16,6 +16,7 @@ public class QuestionGeneric : MonoBehaviour
     [SerializeField] private RectTransform answerTransform;
     [SerializeField] private TextMeshProUGUI questionNumber;
     [SerializeField] private TextMeshProUGUI questionText;
+    [SerializeField] private Canvas canvas;
     
 
     [Header("Attributes")]
@@ -34,9 +35,20 @@ public class QuestionGeneric : MonoBehaviour
 
     private AnswerGeneric clickedAnswer;
 
+    private void Awake()
+    {
+        foreach (Camera c in Camera.allCameras)
+        {
+            if (c.gameObject.name == "Question Camera")
+            {
+                canvas.worldCamera = c;
+            }
+        }
+    }
 
     void Start()
     {
+
         onReset?.Invoke();
         onStart?.Invoke();
         Reset();
@@ -79,6 +91,8 @@ public class QuestionGeneric : MonoBehaviour
         // Sets the clicked answer so it doesn't get fadd out
         clickedAnswer = answer;
         clickedAnswer.canvasGroup.ignoreParentGroups = true;
+        clickedAnswer.canvasGroup.interactable = false;
+        clickedAnswer.canvasGroup.blocksRaycasts = false;
 
         if(correct) 
         {
@@ -173,8 +187,13 @@ public class QuestionGeneric : MonoBehaviour
         }
 
         // Sets all answers to normal visibility again including previously clicked one
-        if(clickedAnswer) clickedAnswer.canvasGroup.ignoreParentGroups = false;
-        if(clickedAnswer) clickedAnswer.canvasGroup.DOFade(1,0.0f).SetId("answerTween");
+        if (clickedAnswer)
+        {
+            clickedAnswer.canvasGroup.ignoreParentGroups = false;
+            clickedAnswer.canvasGroup.interactable = true;
+            clickedAnswer.canvasGroup.blocksRaycasts = true;
+            clickedAnswer.canvasGroup.DOFade(1,0.0f).SetId("answerTween");
+        }
         answerCanvasGroup.DOFade(1,0.0f).SetId("answerTween");
     }
 
@@ -199,9 +218,12 @@ public class QuestionGeneric : MonoBehaviour
     {
         SetInteractable(false);
 
+        Vector3 answerPosition = answerTransform.localPosition;
+        Vector3 titlePosition = titleTransform.localPosition;
+
         // Move off screen, then onto screen
-        answerTransform.localPosition = new Vector3(2000,answerTransform.localPosition.y,answerTransform.localPosition.z);
-        titleTransform.localPosition = new Vector3(2000,titleTransform.localPosition.y,titleTransform.localPosition.z);
+        answerTransform.localPosition = new Vector3(2000,answerPosition.y,answerPosition.z);
+        titleTransform.localPosition = new Vector3(2000,titlePosition.y,titlePosition.z);
         answerTransform.DOLocalMoveX(0,0.75f).SetEase(Ease.InOutCubic).SetId("endingTween");
         titleTransform.DOLocalMoveX(0,0.75f).SetEase(Ease.InOutCubic).SetId("endingTween").OnComplete(() =>
         NewQuestionEnd());

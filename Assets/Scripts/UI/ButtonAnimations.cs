@@ -38,7 +38,7 @@ public class ButtonAnimations : MonoBehaviour
 
         if(!GameManager.Instance.restarting)
         {
-        buttonImage.DOColor(buttonColor, 0.4f).SetEase(Ease.InSine).SetId("hoverTween");
+            buttonImage.DOColor(buttonColor, 0.4f).SetEase(Ease.InSine).SetId("hoverTween");
         }
         
     }

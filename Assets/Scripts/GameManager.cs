@@ -14,8 +14,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance 
     { 
         get { return _instance; } 
-    } 
+    }
 
+    [Header("Objects")] 
+    [SerializeField] private PauseMenu pauseMenu;
 
     [Header("Questions")]
     [AssetsOnly] public List<GameObject> questionList;
@@ -37,9 +39,21 @@ public class GameManager : MonoBehaviour
     public Color buttonAqua;
     public Color buttonPurple;
 
+    [ClearOnReload]
+    public static bool paused;
+    [ClearOnReload(valueToAssign:true)]
+    public static bool canPause = true;
 
-    
+
     private Sequence flashSequence;
+
+    void Update()
+    {
+        if (canPause && Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnPause();
+        }
+    }
 
 
     private void Awake() 
@@ -63,11 +77,18 @@ public class GameManager : MonoBehaviour
         currentQuestion = GameObject.FindWithTag("Question").GetComponent<QuestionGeneric>();
        }
 
-    } 
+    }
 
-    public QuestionGeneric CreateQuestion(int questionNumber)
+    private void OnPause()
     {
-        return Instantiate(questionList[questionNumber], Vector3.zero, Quaternion.identity).GetComponent<QuestionGeneric>();
+        paused = !paused;
+        
+        pauseMenu.OnPause(paused);
+    }
+
+    public QuestionGeneric CreateQuestion(int setQuestionNumber)
+    {
+        return Instantiate(questionList[setQuestionNumber], Vector3.zero, Quaternion.identity).GetComponent<QuestionGeneric>();
     }
 
     public void NextQuestion()

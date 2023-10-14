@@ -7,6 +7,20 @@
       "dependencies": {},
       "hash": "a276ef6e7eaba3a265abb9dd2fbd981ad2ef2cc3"
     },
+    "com.inf.my-hierarchy": {
+      "version": "https://github.com/INFGameDev/My-Hierarchy.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "49fd57a9e777b07a5f2904583abf1ee3c6818696"
+    },
+    "com.jsteinhauer.unitydomainreloadhelper": {
+      "version": "https://github.com/joshcamas/unity-domain-reload-helper.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "dac958f055605a1d876f7076e7daed00630e0201"
+    },
     "com.unity.2d.animation": {
       "version": "9.0.3",
       "depth": 1,
