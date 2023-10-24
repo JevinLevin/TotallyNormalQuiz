@@ -7,7 +7,8 @@ using Sirenix.OdinInspector;
 public class SequenceScriptableObject : ScriptableObject
 {
 
-    public List<SEQUENCEEntry> sequence;
+    [ListDrawerSettings(ShowIndexLabels = true)]
+    public SEQUENCEEntry[] sequence;
 
 
 }

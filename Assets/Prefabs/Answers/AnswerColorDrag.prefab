@@ -360,8 +360,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f11da8bdcd21f7a4daad9c780d3887d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 4860438248925243756}
   buttonImage: {fileID: 5921396530121144636}
   button: {fileID: 6848033675561977285}
+  disableColor: 0
+  disableScale: 1
 --- !u!114 &2846003974576376469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +410,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!224 &4860438248925243756 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3419155394065198221, guid: 56c91f6d7bde71e468e2e1493ec82fe7, type: 3}
+  m_PrefabInstance: {fileID: 7782494358769812961}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5921396530121144636 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4480518300130688221, guid: 56c91f6d7bde71e468e2e1493ec82fe7, type: 3}

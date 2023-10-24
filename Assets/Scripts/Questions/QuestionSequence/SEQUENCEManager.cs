@@ -17,7 +17,7 @@ public class SEQUENCEManager : MonoBehaviour
     [SerializeField,AssetsOnly] private SequenceScriptableObject sequenceScriptableObject;
     [SerializeField] private Button skipButton;
     private CanvasGroup skipButtonCanvas;
-    private List<SEQUENCEEntry> sequence;
+    private SEQUENCEEntry[] sequence;
     private int sequencePosition;
     private bool showSkip;
 
@@ -88,7 +88,7 @@ public class SEQUENCEManager : MonoBehaviour
         if(answer.GetNumber() == sequence[sequencePosition].answerNumber)
         {
             sequencePosition++;
-            if(sequencePosition == sequence.Count)
+            if(sequencePosition == sequence.Length)
             {
                 Win();
             }

@@ -69,7 +69,7 @@ public class COLORDRAGQuestionManager : MonoBehaviour
 
         Rect overlapRect = CheckOverlap();
 
-        overlapRectTransform.position = overlapRect.position;  
+        overlapRectTransform.position =  GameManager.Instance.QuestionCamera.ScreenToWorldPoint(new Vector3(overlapRect.position.x, overlapRect.position.y, GameManager.Instance.QuestionCamera.nearClipPlane));  
 
         overlapRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, overlapRect.width);
         overlapRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, overlapRect.height); 
@@ -125,12 +125,23 @@ public class COLORDRAGQuestionManager : MonoBehaviour
     {
         CalculateScale();
 
-        Rect rect1 = new Rect(rectRed.position.x * scaleX, rectRed.position.y * scaleY, rectRed.rect.width, rectRed.rect.height);
-        Rect rect2 = new Rect(rectBlue.position.x * scaleX, rectBlue.position.y * scaleY, rectBlue.rect.width, rectBlue.rect.height);
-        Rect rect3 = new Rect(rectOrange.position.x * scaleX, rectOrange.position.y * scaleY, rectOrange.rect.width, rectOrange.rect.height);
+        Vector2 redPosition =
+            GameManager.Instance.QuestionCamera.WorldToScreenPoint(rectRed.position);
+        Vector2 bluePosition =
+            GameManager.Instance.QuestionCamera.WorldToScreenPoint(rectBlue.position);
+        Vector2 orangePosition =
+            GameManager.Instance.QuestionCamera.WorldToScreenPoint(rectOrange.position);
 
+        Rect rect1 = new Rect( redPosition.x * scaleX, redPosition.y * scaleY, rectRed.rect.width, rectRed.rect.height);
+        Rect rect2 = new Rect(bluePosition.x * scaleX, bluePosition.y * scaleY, rectBlue.rect.width, rectBlue.rect.height);
+        Rect rect3 = new Rect(orangePosition.x * scaleX, orangePosition.y * scaleY, rectOrange.rect.width, rectOrange.rect.height);
+        
+        
+        //print(rect1);
+        //print(rect2);
+        //print(rect3);
         // Initialize an empty rectangle for the overlapping area
-        Rect overlappingRect = Rect.zero;
+        Rect overlappingRect;
 
         overlappingRect = Rect.MinMaxRect(
             Mathf.Max(rect1.xMin, rect2.xMin),

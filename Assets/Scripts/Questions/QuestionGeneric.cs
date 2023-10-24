@@ -34,20 +34,11 @@ public class QuestionGeneric : MonoBehaviour
     [SerializeField] public List<AnswerGeneric> answers;
 
     private AnswerGeneric clickedAnswer;
-
-    private void Awake()
-    {
-        foreach (Camera c in Camera.allCameras)
-        {
-            if (c.gameObject.name == "Question Camera")
-            {
-                canvas.worldCamera = c;
-            }
-        }
-    }
-
+    
     void Start()
     {
+        canvas.worldCamera = GameManager.Instance.QuestionCamera;
+
 
         onReset?.Invoke();
         onStart?.Invoke();

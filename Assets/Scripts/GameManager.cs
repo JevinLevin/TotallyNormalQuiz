@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [Header("Components")] 
     [SerializeField] private AudioMixer audioMixer;
 
+    [SerializeField] public Camera QuestionCamera;
+
     [SerializeField] private QuitAnimation quitAnimation;
     [Header("Objects")] 
     [SerializeField] private PauseMenu pauseMenu;

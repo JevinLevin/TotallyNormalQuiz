@@ -385,7 +385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4519270888080878681, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4519270888080878681, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -405,15 +405,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4519270888080878681, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4519270888080878681, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4519270888080878681, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4519270888080878681, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -522,17 +522,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6214060577266563048}
   m_SourcePrefab: {fileID: 100100000, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
---- !u!114 &2222979341140947049 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3430048381077254730, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
-  m_PrefabInstance: {fileID: 3548943410373034531}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &4273547367454404183 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 724746983789784180, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
@@ -557,7 +546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questionScript: {fileID: 5844064154210254106}
   canvas: {fileID: 8267618845569532301}
-  canvasScaler: {fileID: 2222979341140947049}
+  canvasScaler: {fileID: 5789777051920051205}
   answers:
   - {fileID: 870980708689687425}
   - {fileID: 4451094329116201974}
@@ -570,6 +559,17 @@ MonoBehaviour:
   overlapRectTransform: {fileID: 4781089204898561240}
   overlapRectMask: {fileID: 1757487632925920842, guid: 13a226f21d6b1ca41978178e7c4d4746, type: 3}
   overlapRectImage: {fileID: 309740238143697092}
+--- !u!114 &5789777051920051205 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6996635277650865702, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
+  m_PrefabInstance: {fileID: 3548943410373034531}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4478992358608104353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5844064154210254106 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6942906134293659449, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
@@ -620,6 +620,10 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 8267618845569532301}
+    - target: {fileID: 3833451224261439452, guid: 570cff28be972914a9516f6a265858e5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -30
+      objectReference: {fileID: 0}
     - target: {fileID: 4078226907975047122, guid: 570cff28be972914a9516f6a265858e5, type: 3}
       propertyPath: m_Name
       value: Answer Orange
@@ -1087,6 +1091,10 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 8267618845569532301}
+    - target: {fileID: 3833451224261439452, guid: 570cff28be972914a9516f6a265858e5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -30
+      objectReference: {fileID: 0}
     - target: {fileID: 4078226907975047122, guid: 570cff28be972914a9516f6a265858e5, type: 3}
       propertyPath: m_Name
       value: Answer Blue

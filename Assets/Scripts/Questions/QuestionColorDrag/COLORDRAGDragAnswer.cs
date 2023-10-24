@@ -43,10 +43,10 @@ public class COLORDRAGDragAnswer : MonoBehaviour, IDragHandler, IBeginDragHandle
     public void OnDrag(PointerEventData data)
     {
         rectTransform.anchoredPosition += data.delta / canvas.scaleFactor;
-        UIMustInScreen(rectTransform, canvas);
+        UIMustInScreen(rectTransform);
     }
 
-    private void UIMustInScreen(RectTransform target, Canvas canvas = null) {
+    private void UIMustInScreen(RectTransform target) {
        
         RectTransform canvasRect = canvas.transform as RectTransform;
         RectTransform parentRect = target.parent.GetComponent<RectTransform>();
@@ -54,9 +54,9 @@ public class COLORDRAGDragAnswer : MonoBehaviour, IDragHandler, IBeginDragHandle
         Vector2       screenPos  = RectTransformUtility.WorldToScreenPoint(cam, target.position);
  
         float minX = target.pivot.x * target.rect.size.x;
-        float maxX = canvasRect.rect.size.x - (1 - target.pivot.x) * target.rect.size.x;
+        float maxX = (canvasRect.rect.size.x*canvas.scaleFactor) - (1 - target.pivot.x) * target.rect.size.x;
         float minY = target.pivot.y * target.rect.size.y;
-        float maxY = canvasRect.rect.size.y - (1 - target.pivot.y) * target.rect.size.y;
+        float maxY = (canvasRect.rect.size.y*canvas.scaleFactor) - (1 - target.pivot.y) * target.rect.size.y;
        
         screenPos.x = Mathf.Clamp(screenPos.x, minX, maxX);
         screenPos.y = Mathf.Clamp(screenPos.y, minY, maxY);
