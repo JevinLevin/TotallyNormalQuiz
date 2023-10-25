@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rectTransform: {fileID: 3732772171376583897}
   canvasGroup: {fileID: 7771573987107208887}
-  moveSpeed: 150
+  image: {fileID: 6100669022019186782}
 --- !u!225 &7771573987107208887
 CanvasGroup:
   m_ObjectHideFlags: 0

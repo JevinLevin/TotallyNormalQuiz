@@ -25,53 +25,57 @@ public class GUITARManager : MonoBehaviour
 
     void Awake()
     {
-        totalInputs = sequence.GetLength();
+        livesScript.Setup(lives);
     }
     
     void Start()
     {
-        inputPool = new ObjectPool<GUITARInput>(() =>
-            { // If no available inputs
-            return Instantiate(inputObject).GetComponent<GUITARInput>();
-            }, // If available input
-            input => {
-            input.gameObject.SetActive(true);
-            }, // If removing input
-            input => {
-            input.gameObject.SetActive(false); 
-            },
-            input => { 
-                Destroy(input.gameObject); 
-            },
+        inputPool = new ObjectPool<GUITARInput>(
+            () => Instantiate(inputObject).GetComponent<GUITARInput>(), 
+            input => { input.gameObject.SetActive(true); }, 
+            input => { input.gameObject.SetActive(false); },
+            input =>
+            {
+                print("cum"); Destroy(input.gameObject); },
             false,
             5
         );
     }
     
 
-    public GUITARInput SpawnInput()
-    {
-        var input = inputPool.Get();
-        input.SetManager(this);
-        return input;
-    }
-
     public void OnReset()
     {        
+        totalInputs = sequence.GetLength();
         currentLives = lives;
         livesScript.ResetLives();
-        foreach (GUITARAnswer answer in answers)
-        {
-            answer.ClearInputs();
-        }
+        ReturnToPool();
     }
     
     public void OnStart()
     {
-        StartCoroutine(nameof(PlaySequence));
         active = true;
+        
+        StartCoroutine(nameof(PlaySequence));
     }
 
+    // Stores all active inputs from answers into list and returns them to poll
+    private void ReturnToPool()
+    {
+        List<GUITARInput> inputs = new();
+        foreach (GUITARAnswer answer in answers)
+        {
+            inputs.AddRange(answer.GetInputs());
+            
+            // Clears the answers input list too
+            answer.ClearInputs();
+        }
+        foreach (GUITARInput input in inputs)
+        {
+            inputPool.Release(input);
+        }
+    }
+
+    // Loops through every entry in the sequence, waits, then spawns it
     public IEnumerator PlaySequence()
     {
         int inputCount = 0;
@@ -84,37 +88,44 @@ public class GUITARManager : MonoBehaviour
             // Delay the spawning of the next note
             yield return new WaitForSeconds(currentNote.delay);
             
-            // Spawn the input object from the object pool
-            GUITARInput newInput = SpawnInput();
-            
-            // Set the input to the correct answer
-            answers[currentNote.buttonNumber-1].SetInput(newInput);
+            // Grabs input and assigns it to the correct answer
+            GUITARInput newInput = inputPool.Get();
+            answers[currentNote.buttonNumber-1].SetInput(newInput, this);
 
             inputCount++;
         }
     }
 
 
-
+    // If an input is missed of mistimed
     public void FailInput()
     {
-        livesScript.LoseLife(currentLives);
+
+        // Checks if that was the final life
         currentLives--;
         if (currentLives == 0)
         {
             Fail();
         }
+        
+        // Visuals
+        livesScript.LoseLife(currentLives);
     }
 
+    // If the player runs out of lives
     private void Fail()
     {
+        // Stops inputs from moving
         active = false;
         
+        // Restart question
         questionScript.GenericAnswerWrong();
         
+        // Stop spawning inputs
         StopCoroutine(nameof(PlaySequence));
     }
 
+    // Check if all inputs are gone
     public void CheckWin()
     {
         if (totalInputs <= 0)
@@ -123,11 +134,21 @@ public class GUITARManager : MonoBehaviour
         }
     }
 
+    // If all inputs are gone and at least 1 life remains
     private void Win()
     {
         livesScript.Win();
         
+        // Next question
         questionScript.GenericAnswerCorrect();
+    }
+    
+    // Removes input from object pool
+    public void RemoveInput(GUITARInput input)
+    {
+        
+        inputPool.Release(input);
+        --totalInputs;
     }
 
     public float GetMoveSpeed()
@@ -135,19 +156,10 @@ public class GUITARManager : MonoBehaviour
         return moveSpeed;
     }
 
-    public int GetLives()
-    {
-        return lives;
-    }
-
     public bool IsActive()
     {
         return active;
     }
 
-    public void RemoveInput()
-    {
-        --totalInputs;
-    }
     
 }

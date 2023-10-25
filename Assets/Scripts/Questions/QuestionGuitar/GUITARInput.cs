@@ -9,8 +9,9 @@ public class GUITARInput : MonoBehaviour
 {
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private Image image;
 
-    private bool onLine;
+    public bool OnLine { get; set; }
     private bool correct;
 
     private GUITARManager guitarManager;
@@ -26,15 +27,23 @@ public class GUITARInput : MonoBehaviour
         canvasGroup.alpha = 1;
     }
     
-    public void Setup(RectTransform inputSpawner, GUITARAnswer guitarAnswer)
+    public void Setup(RectTransform inputSpawner, GUITARAnswer guitarAnswer, GUITARManager guitarManager, Sprite sprite)
     {
-        onLine = false;
+        // Variables
+        OnLine = false;
         correct = false;
         
+        // Transform (pos + scale)
         transform.SetParent(inputSpawner);
         transform.localScale = Vector3.one;
-        SetPosition(inputSpawner.position);
+        rectTransform.position = inputSpawner.position;
+        
+        // Sprite
+        image.sprite = sprite;
+        
+        // References
         this.guitarAnswer = guitarAnswer;
+        this.guitarManager = guitarManager;
     }
 
     public void FailInput()
@@ -44,48 +53,39 @@ public class GUITARInput : MonoBehaviour
 
     public void CorrectInput()
     {
+        // This var stops the exit trigger funtion being called, and the game thinking the input went past the line
         correct = true;
-        FadeOut();
+
+        // Correct animation
         rectTransform.DOScale(new Vector2(1.5f, 1.5f), 0.2f);
+
+        FadeOut();
     }
 
     private void FadeOut()
     {
         
-        canvasGroup.DOFade(0.0f, 0.2f).OnComplete(() =>
-            Destroy());
+        canvasGroup.DOFade(0.0f, 0.2f).OnComplete(RemoveInput);
     }
 
-    public void SetManager(GUITARManager manager)
+    private void RemoveInput()
     {
-        guitarManager = manager;
+        guitarManager.RemoveInput(this);
+        guitarManager.CheckWin();
     }
 
-    public void SetPosition(Vector2 position)
-    {
-        rectTransform.position = position;
-    }
-
+    // Tracks once the object has gone over the line
     private void OnTriggerEnter2D(Collider2D other)
     {
-        onLine = true;
+        OnLine = true;
     }
 
+    // Runs once the object has gone past the line
     private void OnTriggerExit2D(Collider2D other)
     {
-        if(!correct)
+        if(!correct && guitarManager.IsActive())
         {
             guitarAnswer.MissInput();
         }
-    }
-
-    public bool IsOnLine()
-    {
-        return onLine;
-    }
-
-    public void Destroy()
-    {
-        guitarManager.inputPool.Release(this);
     }
 }

@@ -19,13 +19,15 @@ public class SWITCHClickCheck : MonoBehaviour
     [SerializeField] public TextMeshProUGUI answerText;
     private bool mouseOver;
     private bool hasClicked;
-    
+
     void Update()
     {
-
-
+        
+        
+        // If mouse hovered over the button and not first frame
         if (mouseOver && answerRandomiser.clicked)
         {
+            // If player clicked last frame
             if(hasClicked)
             {
                 if(correctAnswer)
@@ -33,12 +35,14 @@ public class SWITCHClickCheck : MonoBehaviour
                     answerRandomiser.RandomiseAnswers();
                 }
             }
-            if(Input.GetMouseButtonUp(0))
+            // If the player lets go on the correct button
+            if(Input.GetMouseButtonUp(0) && !answerRandomiser.mouseSpeed)
             {
                 ClickAnswer();
             }
         }
 
+        // This ensures that it only checks if the mouse was clicked last frame and not during the current frame
         hasClicked = false;
         hasClicked = Input.GetMouseButtonDown(0); 
     }
