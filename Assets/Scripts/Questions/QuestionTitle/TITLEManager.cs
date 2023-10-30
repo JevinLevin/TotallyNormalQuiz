@@ -14,13 +14,14 @@ public class TITLEManager : MonoBehaviour
         text.gameObject.SetActive(false);
     }
 
-    public void ShowTuna()
-    {
-        text.gameObject.SetActive(true);
-    }
+    //public void ShowTuna()
+    //{
+    //    text.gameObject.SetActive(true);
+    //}
 
     public void OnAnswerClicked()
     {
+        text.gameObject.SetActive(true);
         GameManager.Instance.FadeImageColor(GameManager.Instance.buttonGreen, 0.25f, text);
 
         questionScript.GenericAnswerCorrect();
