@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
@@ -31,10 +32,15 @@ public class QuestionGeneric : MonoBehaviour
     [SerializeField] private UnityEvent onFail;
 
     [Header("Misc")]
-    [SerializeField] public List<AnswerGeneric> answers;
+    public List<AnswerGeneric> answers;
 
     private AnswerGeneric clickedAnswer;
-    
+
+    private void Awake()
+    {
+        answers = GetComponentsInChildren<AnswerGeneric>().ToList();
+    }
+
     void Start()
     {
         canvas.worldCamera = GameManager.Instance.QuestionCamera;

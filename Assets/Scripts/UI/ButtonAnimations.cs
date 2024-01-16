@@ -5,8 +5,9 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
+using UnityEngine.EventSystems;
 
-public class ButtonAnimations : MonoBehaviour
+public class ButtonAnimations : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Components")]
     [SerializeField] protected RectTransform rectTransform;
@@ -31,42 +32,36 @@ public class ButtonAnimations : MonoBehaviour
         DOTween.Kill(rectTransform);
     }
 
-    public void OnHover()
-    {
-        if(!GameManager.Instance.restarting)
-        {
-            if(!disableColor)
-            {
-                DOTween.Kill(buttonImage);
-                buttonImage.DOColor(hoverButtonColor, 0.1f).SetEase(Ease.OutSine).SetId("hoverTween");
-            }
 
-            if (!disableScale)
-            {
-                DOTween.Kill(rectTransform);
-                rectTransform.DOScale(1.03f, 0.1f);
-            }
-        }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (GameManager.Instance.restarting) return;
         
+        if(!disableColor)
+        {
+            DOTween.Kill(buttonImage);
+            buttonImage.DOColor(hoverButtonColor, 0.1f).SetEase(Ease.OutSine).SetId("hoverTween");
+        }
+
+        if (!disableScale)
+        {
+            DOTween.Kill(rectTransform);
+            rectTransform.DOScale(1.03f, 0.1f);
+        }
     }
 
-    public void OnHoverExit()
+    public void OnPointerExit(PointerEventData eventData)
     {
-
-        if(!GameManager.Instance.restarting)
-        {
-            if (!disableColor)
-            {
-                buttonImage.DOColor(buttonColor, 0.4f).SetEase(Ease.InSine).SetId("hoverTween");
-            }
-
-            if (!disableScale)
-            {
-                rectTransform.DOScale(1f, 0.2f);
-            }
-        }
+        if (GameManager.Instance.restarting) return;
         
+        if (!disableColor)
+        {
+            buttonImage.DOColor(buttonColor, 0.4f).SetEase(Ease.InSine).SetId("hoverTween");
+        }
+
+        if (!disableScale)
+        {
+            rectTransform.DOScale(1f, 0.2f);
+        }
     }
-
-
 }
