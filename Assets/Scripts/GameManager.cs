@@ -95,6 +95,12 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        currentQuestion.onReset?.Invoke();
+        currentQuestion.onStart?.Invoke();
+    }
+
     public void OnPause()
     {
         paused = !paused;
@@ -126,25 +132,25 @@ public class GameManager : MonoBehaviour
 
 
 
-    public void FadeImageColorInOut(Color fadeColor, float fadeInTime, float fadeOutTime, Image image)
+    public Tween FadeImageColorInOut(Color fadeColor, float fadeInTime, float fadeOutTime, Image image)
     {
         DOTween.Complete(image);
         Color defaultColor = image.color;
 
-        image.DOColor(fadeColor, fadeInTime).SetId("answerTween").OnComplete(() =>
+        return image.DOColor(fadeColor, fadeInTime).SetId("answerTween").OnComplete(() =>
         image.DOColor(defaultColor, fadeOutTime).SetEase(Ease.InQuad).SetId("answerTween"));
 
     }
 
-    public void FadeImageColor(Color fadeColor, float fadeInTime, Image image)
+    public Tween FadeImageColor(Color fadeColor, float fadeInTime, Image image)
     {
-        image.DOColor(fadeColor, fadeInTime).SetId("answerTween");
+        return image.DOColor(fadeColor, fadeInTime).SetId("answerTween");
 
     }
 
-    public void FadeImageColor(Color fadeColor, float fadeInTime, TextMeshProUGUI text)
+    public Tween FadeImageColor(Color fadeColor, float fadeInTime, TextMeshProUGUI text)
     {
-        text.DOColor(fadeColor, fadeInTime).SetId("answerTween");
+        return text.DOColor(fadeColor, fadeInTime).SetId("answerTween");
 
     }
 

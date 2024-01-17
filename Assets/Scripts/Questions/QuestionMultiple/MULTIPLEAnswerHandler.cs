@@ -17,7 +17,7 @@ public class MULTIPLEAnswerHandler : MonoBehaviour
     {
         // Grab all answer objects
         answerList = GameObject.FindObjectsOfType<AnswerGeneric>();
-        questionScript.answers.AddRange(answerList);
+        questionScript.Answers.AddRange(answerList);
         SetAnswers();
     }
 

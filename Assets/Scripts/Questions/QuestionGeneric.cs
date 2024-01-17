@@ -27,18 +27,17 @@ public class QuestionGeneric : MonoBehaviour
     [SerializeField] private bool randomisePlacements;
     
     [Header("Events")]
-    [SerializeField] private UnityEvent onReset;
-    [SerializeField] private UnityEvent onStart;
-    [SerializeField] private UnityEvent onFail;
+    [SerializeField] public UnityEvent onReset;
+    [SerializeField] public UnityEvent onStart;
+    [SerializeField] public UnityEvent onFail;
 
-    [Header("Misc")]
-    public List<AnswerGeneric> answers;
+    public List<AnswerGeneric> Answers { get; private set; }
 
     private AnswerGeneric clickedAnswer;
 
     private void Awake()
     {
-        answers = GetComponentsInChildren<AnswerGeneric>().ToList();
+        Answers = GetComponentsInChildren<AnswerGeneric>(true).ToList();
     }
 
     void Start()
@@ -46,8 +45,8 @@ public class QuestionGeneric : MonoBehaviour
         canvas.worldCamera = GameManager.Instance.QuestionCamera;
 
 
-        onReset?.Invoke();
-        onStart?.Invoke();
+        //onReset?.Invoke();
+        //onStart?.Invoke();
         Reset();
     }
 
@@ -115,20 +114,29 @@ public class QuestionGeneric : MonoBehaviour
         FadeAnswers();
     }
 
-    public void GenericAnswerCorrect()
+    public void GenericAnswerCorrect(bool fadeAnswers = false)
     {
         GenericAnswer();
 
         Invoke("NextQuestion", 1.5f);
+
+        if (!fadeAnswers) return;
+        foreach (AnswerGeneric answer in Answers)
+            GameManager.Instance.FadeImageColor(colourCorrect, 0.25f, answer.frontImage);
+
     }
 
-    public void GenericAnswerWrong()
+    public void GenericAnswerWrong(bool fadeAnswers = false)
     {
         GenericAnswer();
 
         onFail?.Invoke();
 
         StartCoroutine(RestartQuestion());
+        
+        if (!fadeAnswers) return;
+        foreach (AnswerGeneric answer in Answers)
+            GameManager.Instance.FadeImageColor(colourIncorrect, 0.25f, answer.frontImage);
     }
 
     private void FadeAnswers()
@@ -178,7 +186,7 @@ public class QuestionGeneric : MonoBehaviour
         
         DOTween.Complete("answerTween");
 
-        foreach(AnswerGeneric answer in answers)
+        foreach(AnswerGeneric answer in Answers)
         {
             answer.SetDefaultColors();
         }
@@ -196,9 +204,9 @@ public class QuestionGeneric : MonoBehaviour
 
     public void RandomPlacements()
     {
-        foreach(AnswerGeneric answer in answers)
+        foreach(AnswerGeneric answer in Answers)
         {
-            answer.RandomisePlacement(answers.Count);
+            answer.RandomisePlacement(Answers.Count);
         }
     }
 
@@ -207,6 +215,9 @@ public class QuestionGeneric : MonoBehaviour
         answerTransform.DOLocalMoveX(-2000,0.75f).SetEase(Ease.InOutCubic).SetId("questionTween");
         titleTransform.DOLocalMoveX(-2000,0.75f).SetEase(Ease.InOutCubic).SetId("questionTween");
         SetInteractable(false);
+        
+        onReset?.Invoke();
+        onStart?.Invoke();
 
         GameManager.Instance.NextQuestion();
     }

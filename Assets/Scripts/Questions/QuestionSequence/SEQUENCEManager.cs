@@ -105,7 +105,7 @@ public class SEQUENCEManager : MonoBehaviour
 
     private void Fail()
     {
-        foreach(AnswerGeneric answer in questionScript.answers)
+        foreach(AnswerGeneric answer in questionScript.Answers)
         {
             GameManager.Instance.FadeImageColor(GameManager.Instance.buttonRed, 0.25f, answer.backImage);
         }

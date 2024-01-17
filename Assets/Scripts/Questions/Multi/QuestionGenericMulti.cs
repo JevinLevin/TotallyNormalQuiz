@@ -94,7 +94,7 @@ public class QuestionGenericMulti : MonoBehaviour
 
     public void FadeAnswersInOut(Color fadeColor)
     {
-        foreach(AnswerGeneric answer in questionScript.answers)
+        foreach(AnswerGeneric answer in questionScript.Answers)
         {
             DOTween.Kill(answer.backImage);
             GameManager.Instance.FadeImageColorInOut(fadeColor, 0.25f, 0.5f, answer.backImage);
@@ -103,7 +103,7 @@ public class QuestionGenericMulti : MonoBehaviour
 
     public void FadeAnswers(Color fadeColor)
     {
-        foreach(AnswerGeneric answer in questionScript.answers)
+        foreach(AnswerGeneric answer in questionScript.Answers)
         {
             DOTween.Kill(answer.backImage);
             GameManager.Instance.FadeImageColor(fadeColor, 0.15f, answer.backImage);
@@ -112,7 +112,7 @@ public class QuestionGenericMulti : MonoBehaviour
 
     public void FadeAnswerText()
     {
-        foreach(AnswerGeneric answer in questionScript.answers)
+        foreach(AnswerGeneric answer in questionScript.Answers)
         {
            answer.FadeText(0.25f);
         }
@@ -120,7 +120,7 @@ public class QuestionGenericMulti : MonoBehaviour
 
     public void FlashAnswers(Color fadeColor)
     {
-        foreach(AnswerGeneric answer in questionScript.answers)
+        foreach(AnswerGeneric answer in questionScript.Answers)
         {
             GameManager.Instance.FlashImageColor(fadeColor, 0.25f, answer.backImage);
         }
@@ -151,7 +151,7 @@ public class QuestionGenericMulti : MonoBehaviour
         correctAnswers.Shuffle();
         wrongAnswers.Shuffle();
 
-        MultiAnswer[] newAnswers = new MultiAnswer[questionScript.answers.Count];
+        MultiAnswer[] newAnswers = new MultiAnswer[questionScript.Answers.Count];
 
         if(correctAnswers.Count > 0) 
         {
@@ -178,8 +178,8 @@ public class QuestionGenericMulti : MonoBehaviour
         {
             for(int i = 0; i < newAnswers.Length; i++)
             {
-                questionScript.answers[i].SetText(newAnswers[i].answer);
-                questionScript.answers[i].SetCorrect(newAnswers[i].correct);
+                questionScript.Answers[i].SetText(newAnswers[i].answer);
+                questionScript.Answers[i].SetCorrect(newAnswers[i].correct);
                 if(newAnswers[i].correct)
                 {
                     correctIndex = i;

@@ -95,7 +95,7 @@ public class COLORDRAGQuestionManager : MonoBehaviour
 
     private void FadeAnswers(Color fadeColor)
     {
-        foreach(AnswerGeneric answer in questionScript.answers)
+        foreach(AnswerGeneric answer in questionScript.Answers)
         {
             GameManager.Instance.FadeImageColor(fadeColor, 0.25f, answer.frontImage);
         }
