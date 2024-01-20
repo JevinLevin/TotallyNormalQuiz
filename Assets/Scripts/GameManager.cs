@@ -70,6 +70,21 @@ public class GameManager : MonoBehaviour
     public static Color ButtonAqua;
     [SerializeField] private Color buttonPurple;
     public static Color ButtonPurple;
+    public enum GameColors
+    {
+        Red,
+        Blue,
+        Green,
+        Yellow,
+        Pink,
+        DarkBlue,
+        Orange,
+        Aqua,
+        Purple
+    }
+    // Creates mapping of color string and the color
+    // This allows the player to set a color based only on a string
+    public static Dictionary<GameColors, Color> ColorDictionary;
 
     [Header("Values")] 
 
@@ -109,6 +124,18 @@ public class GameManager : MonoBehaviour
        ButtonOrange = buttonOrange;
        ButtonAqua = buttonAqua;
        ButtonPurple = buttonPurple;
+       ColorDictionary = new()
+       {
+           {GameColors.Red, ButtonRed},
+           {GameColors.Blue, ButtonBlue},
+           {GameColors.Green, ButtonGreen},
+           {GameColors.Yellow, ButtonYellow},
+           {GameColors.DarkBlue, ButtonDarkBlue},
+           {GameColors.Pink, ButtonPink},
+           {GameColors.Orange, ButtonOrange},
+           {GameColors.Aqua, ButtonAqua},
+           {GameColors.Purple, ButtonPurple}
+       };
 
     }
 

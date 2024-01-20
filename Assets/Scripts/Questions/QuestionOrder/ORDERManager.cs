@@ -15,7 +15,7 @@ public class ORDERManager : MonoBehaviour
 
     private void OnEnable()
     {
-        questionMultiScript.OnNewQuestion += SetCorrect;
+        questionMultiScript.OnSetAnswers += SetCorrect;
     }
 
     public void SetCorrect(MultiAnswer[] answers)

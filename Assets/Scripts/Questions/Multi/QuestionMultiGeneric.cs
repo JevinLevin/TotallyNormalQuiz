@@ -8,7 +8,8 @@ public class QuestionMultiGeneric : QuestionGeneric
 {
     [SerializeField] private MultiPhase[] phases;
     public Action OnCorrect;
-    public Action<MultiAnswer[]> OnNewQuestion;
+    public Action<MultiAnswer[]> OnSetAnswers;
+    public Action OnSetQuestion;
 
     public int CurrentPhase { get; private set; }
     private int previousIndex;
@@ -46,8 +47,9 @@ public class QuestionMultiGeneric : QuestionGeneric
             newAnswers[i] = wrongAnswers[i];
         newAnswers.Shuffle();
         
-        OnNewQuestion?.Invoke(newAnswers);
+        OnSetAnswers?.Invoke(newAnswers);
 
+        // Set UI with created answer classs
         int correctIndex = 0;
         do
         {
@@ -70,6 +72,7 @@ public class QuestionMultiGeneric : QuestionGeneric
 
         previousIndex = correctIndex;
         
+        OnSetQuestion?.Invoke();
 
     }
 
