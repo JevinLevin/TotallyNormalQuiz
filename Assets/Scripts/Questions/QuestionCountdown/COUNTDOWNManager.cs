@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
@@ -14,7 +16,7 @@ public class COUNTDOWNManager : MonoBehaviour
 
 
     [Title("Components")]
-    [SerializeField] private QuestionGenericMulti questionMultiScript;
+    private QuestionMultiGeneric questionMultiScript;
     [SerializeField] private TextMeshProUGUI phaseNumberDisplay;
     [SerializeField] private Image countdownBar;
     [Title("Attributes")]
@@ -25,7 +27,17 @@ public class COUNTDOWNManager : MonoBehaviour
 
     void Awake()
     {
+        questionMultiScript = GetComponent<QuestionMultiGeneric>();
         defaultCountdownBarColor = countdownBar.color;
+    }
+
+    private void OnEnable()
+    {
+        questionMultiScript.OnReset += CountdownReset;
+        questionMultiScript.OnStart += CountdownStart;
+        questionMultiScript.OnFail += CountdownFail;
+        questionMultiScript.OnCorrect += CountdownCorrect;
+        questionMultiScript.OnWin += CountdownWin;
     }
 
     void Update()
@@ -36,14 +48,14 @@ public class COUNTDOWNManager : MonoBehaviour
             countdownTimer += Time.deltaTime;
             if(countdownTimer > countdownMax)
             {
-                questionMultiScript.QuestionFail();
+                questionMultiScript.QuestionMultiWrong();
             }
         }
     }
 
     public void SetPhaseNumber()
     {
-        phaseNumberDisplay.text = questionMultiScript.currentPhaseNumber.ToString();
+        phaseNumberDisplay.text = (questionMultiScript.GetPhaseCount() -1- questionMultiScript.CurrentPhase).ToString();
     }   
     public void CountdownReset()
     {
@@ -65,7 +77,8 @@ public class COUNTDOWNManager : MonoBehaviour
 
     public void CountdownWin()
     {
-        GameManager.Instance.FlashImageColor(GameManager.Instance.buttonGreen, 0.25f, countdownBar);
+        DOTween.Kill(countdownBar);
+        GameManager.FlashImageColor(GameManager.ButtonGreen, 0.25f, countdownBar);
         phaseNumberDisplay.text = "-";
     }
 
@@ -73,13 +86,17 @@ public class COUNTDOWNManager : MonoBehaviour
     {
         CountdownEnd();
 
-        GameManager.Instance.FadeImageColor(GameManager.Instance.buttonRed, 0.15f, countdownBar);
+        DOTween.Kill(countdownBar);
+        GameManager.FadeImageColor(GameManager.ButtonRed, 0.15f, countdownBar);
     }
 
     public void CountdownCorrect()
     {
         countdownTimer = Mathf.Clamp(countdownTimer - correctBonus, 0, countdownMax);
-        GameManager.Instance.FadeImageColorInOut(GameManager.Instance.buttonGreen, 0.25f, 0.5f, countdownBar);
+        GameManager.FadeImageColorInOut(GameManager.ButtonGreen, 0.25f, 0.5f, countdownBar);
+        
+        // Set question title to current number
+        SetPhaseNumber();
     }
 
     private void SetCountdownBar()

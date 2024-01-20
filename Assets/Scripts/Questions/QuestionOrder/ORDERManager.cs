@@ -6,19 +6,28 @@ using System.Linq;
 
 public class ORDERManager : MonoBehaviour
 {
-    [SerializeField] private QuestionGenericMulti questionMultiScript;
+    private QuestionMultiGeneric questionMultiScript;
+
+    private void Awake()
+    {
+        questionMultiScript = GetComponent<QuestionMultiGeneric>();
+    }
+
+    private void OnEnable()
+    {
+        questionMultiScript.OnNewQuestion += SetCorrect;
+    }
 
     public void SetCorrect(MultiAnswer[] answers)
     {
-
         // Creates a copy and reshuffles in order
         MultiAnswer[] tempAnswers = new MultiAnswer[answers.Length];
         Array.Copy(answers, tempAnswers, answers.Length);
-        tempAnswers = tempAnswers.OrderBy( x => x.originalIndex ).ToArray();
+        tempAnswers = tempAnswers.OrderBy( x => int.Parse(x.answer[..2] )).ToArray();
 
         string correctAnswer = "";
 
-        switch (questionMultiScript.currentPhaseNumber)
+        switch (questionMultiScript.CurrentPhase)
         {
             
             case 0:
@@ -45,6 +54,10 @@ public class ORDERManager : MonoBehaviour
             {
                 answer.correct = true;
             }
+            
+            // Remove the index indicator at the start of each answer
+            answer.answer = answer.answer[3..];
+
         }
 
     }

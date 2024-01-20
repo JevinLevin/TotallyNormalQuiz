@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,6 +32,11 @@ public class COLORDRAGQuestionManager : MonoBehaviour
     void Start()
     {
         CalculateScale();
+    }
+
+    private void OnEnable()
+    {
+        questionScript.OnReset += OnReset;
     }
 
     private void CalculateScale()
@@ -80,7 +86,7 @@ public class COLORDRAGQuestionManager : MonoBehaviour
 
         overlapRectImage.DOFade(0.0f,0.0f).OnComplete(() =>
         overlapRectImage.DOFade(1f,0.5f));
-        overlapRectImage.color = GameManager.Instance.buttonGreen;
+        overlapRectImage.color = GameManager.ButtonGreen;
         overlapRectTransform.gameObject.SetActive(true);
 
         questionScript.GenericAnswerCorrect();
@@ -88,7 +94,7 @@ public class COLORDRAGQuestionManager : MonoBehaviour
 
     private void ClickFail()
     {
-        FadeAnswers(GameManager.Instance.buttonRed);
+        FadeAnswers(GameManager.ButtonRed);
 
         questionScript.GenericAnswerWrong();
     }
@@ -97,7 +103,7 @@ public class COLORDRAGQuestionManager : MonoBehaviour
     {
         foreach(AnswerGeneric answer in questionScript.Answers)
         {
-            GameManager.Instance.FadeImageColor(fadeColor, 0.25f, answer.frontImage);
+            GameManager.FadeImageColor(fadeColor, 0.25f, answer.frontImage);
         }
     }
 

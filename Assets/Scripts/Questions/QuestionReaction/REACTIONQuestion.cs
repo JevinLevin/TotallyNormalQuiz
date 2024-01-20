@@ -24,6 +24,11 @@ public class REACTIONQuestion : MonoBehaviour
         answers = GetComponentsInChildren<REACTIONAnswer>();
     }
 
+    private void OnEnable()
+    {
+        questionScript.OnStart += StartQuestion;
+    }
+
     public void StartQuestion()
     {
         currentCoroutine = StartCoroutine(PlayQuestion());

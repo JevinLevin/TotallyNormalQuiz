@@ -5,27 +5,28 @@ using UnityEngine.UI;
 
 public class MultiProgressNotch : MonoBehaviour
 {
-    [SerializeField] private Image image;
+    private Image image;
     private Color defaultButtonColor;
 
     void Awake()
     {
+        image = GetComponent<Image>();
         defaultButtonColor = image.color;
     }
 
     public void Selected()
     {
-        GameManager.Instance.FadeImageColor(GameManager.Instance.buttonHoverColor, 0.15f, image);
+        GameManager.FadeImageColor(GameManager.ButtonHoverColor, 0.15f, image);
     }
 
     public void Completed()
     {
-        GameManager.Instance.FadeImageColor(GameManager.Instance.buttonGreen, 0.15f, image);
+        GameManager.FadeImageColor(GameManager.ButtonGreen, 0.15f, image);
     }
 
     public void Failed()
     {
-        GameManager.Instance.FadeImageColor(GameManager.Instance.buttonRed, 0.15f, image);
+        GameManager.FadeImageColor(GameManager.ButtonRed, 0.15f, image);
     }
 
     public void Reset()

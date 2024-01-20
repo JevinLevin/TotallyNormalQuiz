@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -15,13 +16,19 @@ public class BUFFERINGManager : MonoBehaviour
     [SerializeField] private CanvasGroup skipCanvasGroup;
     [SerializeField] private Image skipImage;
     private bool buffering;
+
+    private void OnEnable()
+    {
+        questionScript.OnReset += OnReset;
+    }
+
     void Update()
     {
         if(!InternetAvailability.IsInternetAvailable() && buffering)
-            {
-                DownloadFailed();
-                buffering = false;
-            }
+        {
+            DownloadFailed();
+            buffering = false;
+        }
  
     }
 
@@ -56,7 +63,7 @@ public class BUFFERINGManager : MonoBehaviour
 
     public void ClickAnswer()
     {
-        GameManager.Instance.FadeImageColor(GameManager.Instance.buttonGreen, 0.25f, skipImage);
+        GameManager.FadeImageColor(GameManager.ButtonGreen, 0.25f, skipImage);
 
         questionScript.GenericAnswerCorrect();
     }

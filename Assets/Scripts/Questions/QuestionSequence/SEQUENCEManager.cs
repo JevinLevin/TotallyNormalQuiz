@@ -28,6 +28,12 @@ public class SEQUENCEManager : MonoBehaviour
         skipButtonCanvas = skipButton.GetComponent<CanvasGroup>();
     }
 
+    private void OnEnable()
+    {
+        questionScript.OnReset += ResetSequence;
+        questionScript.OnStart += StartSequence;
+    }
+
     public void ResetSequence()
     {
         titleText.DOFade(0.0f,0.0f).SetId("questionTween");
@@ -68,7 +74,7 @@ public class SEQUENCEManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         foreach(SEQUENCEEntry entry in sequence)
         {
-            GameManager.Instance.FadeImageColorInOut(answers[entry.answerNumber-1].GetColor(), fadeInTime / (entry.delay*2),fadeOutTime / (entry.delay*2),answers[entry.answerNumber-1].frontImage);
+            GameManager.FadeImageColorInOut(answers[entry.answerNumber-1].GetColor(), fadeInTime / (entry.delay*2),fadeOutTime / (entry.delay*2),answers[entry.answerNumber-1].frontImage);
             yield return new WaitForSeconds(entry.delay);
         }
         yield return new WaitForSeconds(0.5f);
@@ -94,7 +100,7 @@ public class SEQUENCEManager : MonoBehaviour
             }
             else
             {
-                GameManager.Instance.FadeImageColorInOut(answer.GetColor(), 0.15f, 0.35f, answer.backImage);
+                GameManager.FadeImageColorInOut(answer.GetColor(), 0.15f, 0.35f, answer.backImage);
             }
         }
         else
@@ -107,7 +113,7 @@ public class SEQUENCEManager : MonoBehaviour
     {
         foreach(AnswerGeneric answer in questionScript.Answers)
         {
-            GameManager.Instance.FadeImageColor(GameManager.Instance.buttonRed, 0.25f, answer.backImage);
+            GameManager.FadeImageColor(GameManager.ButtonRed, 0.25f, answer.backImage);
         }
         questionScript.GenericAnswerWrong();
     }
@@ -117,7 +123,7 @@ public class SEQUENCEManager : MonoBehaviour
         for(int i = 0; i < answers.Count; i++)
         {
             answers[i].ResetFrontImage();
-            GameManager.Instance.FlashImageColor(GameManager.Instance.buttonGreen, 0.25f, answers[i].backImage);
+            GameManager.FlashImageColor(GameManager.ButtonGreen, 0.25f, answers[i].backImage);
         }
         questionScript.GenericAnswerCorrect();
     }

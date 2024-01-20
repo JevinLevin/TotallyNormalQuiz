@@ -1,19 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 public class MultiAnswer
 {
     public string answer;
     public bool correct;
-    public int originalIndex;
 
-    public MultiAnswer(string answer, bool correct, int originalIndex)
+    public MultiAnswer(string answer, bool correct)
     {
         this.answer = answer;
         this.correct = correct;
-        this.originalIndex = originalIndex;
     }
 }

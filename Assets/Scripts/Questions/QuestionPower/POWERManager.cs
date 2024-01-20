@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Random = UnityEngine.Random;
 
 public class POWERManager : MonoBehaviour
 {
@@ -16,7 +18,12 @@ public class POWERManager : MonoBehaviour
     private int poweredCount;
     
     private string letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    
+
+
+    private void OnEnable()
+    {
+        questionScript.OnStart += OnStart;
+    }
 
     public void OnWin()
     {
@@ -28,11 +35,11 @@ public class POWERManager : MonoBehaviour
 
         foreach (POWERAnswer answer in powerAnswers)
         {
-            answer.PowerAnimation(GameManager.Instance.buttonGreen, 0.75f, 0.4f, 0.3f,1.5f);
+            answer.PowerAnimation(GameManager.ButtonGreen, 0.75f, 0.4f, 0.3f,1.5f);
             answer.FadeOutProgress(0.5f);
         }
         
-        GameManager.Instance.FadeImageColor(GameManager.Instance.buttonGreen, 0.25f, title);
+        GameManager.FadeImageColor(GameManager.ButtonGreen, 0.25f, title);
         
         questionScript.GenericAnswerCorrect();
     }

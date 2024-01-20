@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using TMPro;
 public class SWITCHRandomiseAnswers : MonoBehaviour
 {
 
+    private QuestionGeneric questionScript;
     [SerializeField] private List<SWITCHClickCheck> answerList;
     private List<SWITCHAnswerClass> newAnswerList;
 
@@ -15,6 +17,17 @@ public class SWITCHRandomiseAnswers : MonoBehaviour
     public Vector3 mouseDelta = Vector3.zero;
     private Vector3 lastMousePosition = Vector3.zero;
     public bool mouseSpeed;
+
+    private void Awake()
+    {
+        questionScript = GetComponent<QuestionGeneric>();
+    }
+
+    private void OnEnable()
+    {
+        questionScript.OnReset += OnReset;
+        questionScript.OnFail += OnFail;
+    }
 
     void Update()
     {

@@ -11,12 +11,26 @@ using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 { 
+    #region Singleton
     private static GameManager _instance;
-
     public static GameManager Instance 
     { 
         get { return _instance; } 
     }
+
+    private void CreateSingleton()
+    {
+        if (_instance != null && _instance != this) 
+        { 
+            Destroy(this.gameObject);
+            return;
+        }
+
+        _instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
+    #endregion
+    
 
     [Header("Components")] 
     [SerializeField] private AudioMixer audioMixer;
@@ -36,16 +50,26 @@ public class GameManager : MonoBehaviour
     public bool restarting;
 
     [Header("Colors")]
-    public Color buttonHoverColor;
-    public Color buttonRed;
-    public Color buttonBlue;
-    public Color buttonGreen;
-    public Color buttonYellow;
-    public Color buttonDarkBlue;
-    public Color buttonPink;
-    public Color buttonOrange;
-    public Color buttonAqua;
-    public Color buttonPurple;
+    [SerializeField] private Color buttonHoverColor;
+    public static Color ButtonHoverColor;
+    [SerializeField] private Color buttonRed;
+    public static Color ButtonRed;
+    [SerializeField] private Color buttonBlue;
+    public static Color ButtonBlue;
+    [SerializeField] private Color buttonGreen;
+    public static Color ButtonGreen;
+    [SerializeField] private Color buttonYellow;
+    public static Color ButtonYellow;
+    [SerializeField] private Color buttonDarkBlue;
+    public static Color ButtonDarkBlue;
+    [SerializeField] private Color buttonPink;
+    public static Color ButtonPink;
+    [SerializeField] private Color buttonOrange;
+    public static Color ButtonOrange;
+    [SerializeField] private Color buttonAqua;
+    public static Color ButtonAqua;
+    [SerializeField] private Color buttonPurple;
+    public static Color ButtonPurple;
 
     [Header("Values")] 
 
@@ -55,9 +79,7 @@ public class GameManager : MonoBehaviour
     public static bool canPause = true;
 
     public static float volume;
-
-
-    private Sequence flashSequence;
+    
 
     void Update()
     {
@@ -70,35 +92,40 @@ public class GameManager : MonoBehaviour
 
     private void Awake() 
     { 
-        if (_instance != null && _instance != this) 
-        { 
-            Destroy(this.gameObject);
-            return;
-        }
+        CreateSingleton();
 
-        _instance = this;
-        DontDestroyOnLoad(this.gameObject);
-
-       if (GameObject.FindWithTag("Question") == null)
-       {
-        questionNumber = questionStartingNumber;
-        currentQuestion = CreateQuestion(questionNumber);
-       }
-       else
-       {
-        currentQuestion = GameObject.FindWithTag("Question").GetComponent<QuestionGeneric>();
-       }
-
-       float currentVolume;
+        float currentVolume;
        audioMixer.GetFloat("MasterVolume", out currentVolume);
        volume = NormaliseVolume(currentVolume);
+       
+       // Set colors
+       ButtonHoverColor = buttonHoverColor;
+       ButtonRed = buttonRed;
+       ButtonBlue = buttonBlue;
+       ButtonGreen = buttonGreen;
+       ButtonYellow = buttonYellow;
+       ButtonDarkBlue = buttonDarkBlue;
+       ButtonPink = buttonPink;
+       ButtonOrange = buttonOrange;
+       ButtonAqua = buttonAqua;
+       ButtonPurple = buttonPurple;
 
     }
 
     private void Start()
     {
-        currentQuestion.onReset?.Invoke();
-        currentQuestion.onStart?.Invoke();
+        if (GameObject.FindWithTag("Question") == null)
+        {
+            questionNumber = questionStartingNumber;
+            currentQuestion = CreateQuestion(questionNumber);
+        }
+        else
+        {
+            currentQuestion = GameObject.FindWithTag("Question").GetComponent<QuestionGeneric>();
+        }
+        
+        currentQuestion.OnReset?.Invoke();
+        currentQuestion.OnStart?.Invoke();
     }
 
     public void OnPause()
@@ -132,7 +159,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    public Tween FadeImageColorInOut(Color fadeColor, float fadeInTime, float fadeOutTime, Image image)
+    public static Tween FadeImageColorInOut(Color fadeColor, float fadeInTime, float fadeOutTime, Image image)
     {
         DOTween.Complete(image);
         Color defaultColor = image.color;
@@ -142,29 +169,29 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public Tween FadeImageColor(Color fadeColor, float fadeInTime, Image image)
+    public static Tween FadeImageColor(Color fadeColor, float fadeInTime, Image image)
     {
         return image.DOColor(fadeColor, fadeInTime).SetId("answerTween");
 
     }
 
-    public Tween FadeImageColor(Color fadeColor, float fadeInTime, TextMeshProUGUI text)
+    public static Tween FadeImageColor(Color fadeColor, float fadeInTime, TextMeshProUGUI text)
     {
         return text.DOColor(fadeColor, fadeInTime).SetId("answerTween");
 
     }
 
-    public void FlashImageColor(Color fadeColor, float fadeTime, Image image)
+    public static Tween FlashImageColor(Color fadeColor, float fadeTime, Image image)
     {
         DOTween.Complete(image);
         Color defaultColor = image.color;
 
-        flashSequence = DOTween.Sequence();
-        flashSequence.Append(image.DOColor(fadeColor, fadeTime).SetId("answerTween").SetEase(Ease.OutQuad));
-        flashSequence.Append(image.DOColor(defaultColor, fadeTime).SetId("answerTween").SetEase(Ease.InSine));
-
-        flashSequence.SetId("answerTween").SetLoops(-1);
-        flashSequence.Play();
+        return DOTween.Sequence()
+            .Append(image.DOColor(fadeColor, fadeTime).SetId("answerTween").SetEase(Ease.OutQuad))
+            .Append(image.DOColor(defaultColor, fadeTime).SetId("answerTween").SetEase(Ease.InSine))
+            .SetId("answerTween")
+            .SetLoops(-1)
+            .Play();
 
     }
 

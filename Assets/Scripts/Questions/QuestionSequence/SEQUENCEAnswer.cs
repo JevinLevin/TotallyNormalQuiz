@@ -42,15 +42,15 @@ public class SEQUENCEAnswer : MonoBehaviour
 
     public Color GetColor()
     {
-        if (answerColor == AnswerColors.Red) return GameManager.Instance.buttonRed;
-        if (answerColor == AnswerColors.Blue) return GameManager.Instance.buttonBlue;
-        if (answerColor == AnswerColors.Green) return GameManager.Instance.buttonGreen;
-        if (answerColor == AnswerColors.Yellow) return GameManager.Instance.buttonYellow;
-        if (answerColor == AnswerColors.DarkBlue) return GameManager.Instance.buttonDarkBlue;
-        if (answerColor == AnswerColors.Pink) return GameManager.Instance.buttonPink;
-        if (answerColor == AnswerColors.Orange) return GameManager.Instance.buttonOrange;
-        if (answerColor == AnswerColors.Aqua) return GameManager.Instance.buttonAqua;
-        if (answerColor == AnswerColors.Purple) return GameManager.Instance.buttonPurple;
+        if (answerColor == AnswerColors.Red) return GameManager.ButtonRed;
+        if (answerColor == AnswerColors.Blue) return GameManager.ButtonBlue;
+        if (answerColor == AnswerColors.Green) return GameManager.ButtonGreen;
+        if (answerColor == AnswerColors.Yellow) return GameManager.ButtonYellow;
+        if (answerColor == AnswerColors.DarkBlue) return GameManager.ButtonDarkBlue;
+        if (answerColor == AnswerColors.Pink) return GameManager.ButtonPink;
+        if (answerColor == AnswerColors.Orange) return GameManager.ButtonOrange;
+        if (answerColor == AnswerColors.Aqua) return GameManager.ButtonAqua;
+        if (answerColor == AnswerColors.Purple) return GameManager.ButtonPurple;
 
         // If it somehow fails
         return Color.black;

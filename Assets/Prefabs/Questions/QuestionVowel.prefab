@@ -31,7 +31,7 @@ RectTransform:
   m_Children:
   - {fileID: 6540826948940095146}
   - {fileID: 7407206588381467659}
-  - {fileID: 6603441698935220327}
+  - {fileID: 8419308573319021803}
   - {fileID: 5930917075323872439}
   m_Father: {fileID: 6787587945774061237}
   m_RootOrder: -1
@@ -95,7 +95,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2321542317022674967}
-  - {fileID: 510067461437045720}
+  - {fileID: 2911392511965353818}
   m_Father: {fileID: 7452439350002365842}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -217,12 +217,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56c91f6d7bde71e468e2e1493ec82fe7, type: 3}
---- !u!224 &510067461437045720 stripped
+--- !u!224 &2911392511965353818 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3419155394065198221, guid: 56c91f6d7bde71e468e2e1493ec82fe7, type: 3}
   m_PrefabInstance: {fileID: 510067461437045719}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &510067461437045721 stripped
+--- !u!114 &7146825434830108105 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7222226210841349662, guid: 56c91f6d7bde71e468e2e1493ec82fe7, type: 3}
   m_PrefabInstance: {fileID: 510067461437045719}
@@ -537,7 +537,7 @@ PrefabInstance:
     - target: {fileID: 3677720412080046116, guid: 56c91f6d7bde71e468e2e1493ec82fe7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 6603441698935220328}
+      objectReference: {fileID: 4584280984517600888}
     - target: {fileID: 3677720412080046116, guid: 56c91f6d7bde71e468e2e1493ec82fe7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: AnswerGeneric, Assembly-CSharp
@@ -587,12 +587,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56c91f6d7bde71e468e2e1493ec82fe7, type: 3}
---- !u!224 &6603441698935220327 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3419155394065198221, guid: 56c91f6d7bde71e468e2e1493ec82fe7, type: 3}
-  m_PrefabInstance: {fileID: 6603441698935220326}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6603441698935220328 stripped
+--- !u!114 &4584280984517600888 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7222226210841349662, guid: 56c91f6d7bde71e468e2e1493ec82fe7, type: 3}
   m_PrefabInstance: {fileID: 6603441698935220326}
@@ -603,6 +598,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce45e51beae6e6f4eac45e8e4bb4f7f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &8419308573319021803 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3419155394065198221, guid: 56c91f6d7bde71e468e2e1493ec82fe7, type: 3}
+  m_PrefabInstance: {fileID: 6603441698935220326}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8482222875300704807
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -995,7 +995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1110404400380766594, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
       propertyPath: m_Name
-      value: QuestionVowel Variant
+      value: QuestionVowel
       objectReference: {fileID: 0}
     - target: {fileID: 1413524005960769881, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1212,18 +1212,18 @@ PrefabInstance:
     - target: {fileID: 6942906134293659449, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
       propertyPath: answers.Array.data[2]
       value: 
-      objectReference: {fileID: 6603441698935220328}
+      objectReference: {fileID: 4584280984517600888}
     - target: {fileID: 6942906134293659449, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
       propertyPath: answers.Array.data[3]
       value: 
       objectReference: {fileID: 1803443601188931108}
     - target: {fileID: 6942906134293659449, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
       propertyPath: onReset.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6942906134293659449, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
       propertyPath: onStart.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6942906134293659449, guid: f5003ff0416091d48a0351c006849ec1, type: 3}
       propertyPath: onReset.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1324,4 +1324,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questionScript: {fileID: 2199953159669952833}
   answersParent: {fileID: 192592084930368609}
-  correctParent: {fileID: 510067461437045721}
+  correctParent: {fileID: 7146825434830108105}

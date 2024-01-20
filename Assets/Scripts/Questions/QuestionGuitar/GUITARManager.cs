@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -41,7 +42,13 @@ public class GUITARManager : MonoBehaviour
             5
         );
     }
-    
+
+    private void OnEnable()
+    {
+        questionScript.OnReset += OnReset;
+        questionScript.OnStart += OnStart;
+    }
+
 
     public void OnReset()
     {        

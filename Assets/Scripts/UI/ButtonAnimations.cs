@@ -23,7 +23,7 @@ public class ButtonAnimations : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public virtual void Start()
     {
         buttonColor = buttonImage.color;
-        hoverButtonColor = GameManager.Instance.buttonHoverColor;
+        hoverButtonColor = GameManager.ButtonHoverColor;
     }
 
     void OnDestroy()

@@ -37,7 +37,7 @@ public class POWERAnswer : MonoBehaviour
     {
         defaultGlowSizeDelta = rectGlowTransform.sizeDelta;
         colorNoPower = powerImage.color;
-        colorPower = GameManager.Instance.buttonGreen;
+        colorPower = GameManager.ButtonGreen;
     }
     
     void Update()
@@ -84,7 +84,7 @@ public class POWERAnswer : MonoBehaviour
 
     private void PoweredEnd()
     {
-        GameManager.Instance.FadeImageColorInOut(GameManager.Instance.buttonRed, 0.1f, 0.5f, buttonBorder);
+        GameManager.FadeImageColorInOut(GameManager.ButtonRed, 0.1f, 0.5f, buttonBorder);
         loadingRectangle.End();
         powered = false;
         
@@ -93,7 +93,7 @@ public class POWERAnswer : MonoBehaviour
     
     private void PoweredStart()
     {
-        PowerAnimation(GameManager.Instance.buttonGreen, 0.6f, 0.35f, 0.05f, 2.0f);
+        PowerAnimation(GameManager.ButtonGreen, 0.6f, 0.35f, 0.05f, 2.0f);
         powered = true;
         poweredTime = 0.0f;
 

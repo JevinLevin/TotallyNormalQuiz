@@ -9,19 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fba735f5f93f92a40a5e9634f17185bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 03cfe22e31adbf347b35457782d822a4, type: 3}
   m_Name: 0
   m_EditorClassIdentifier: 
   answers:
-  - answer: 1
+  - answer: 00-1
     correct: 0
-    originalIndex: 0
-  - answer: 2
+  - answer: 01-2
     correct: 0
-    originalIndex: 1
-  - answer: 3
+  - answer: 02-3
     correct: 0
-    originalIndex: 2
-  - answer: 4
+  - answer: 03-4
     correct: 0
-    originalIndex: 3

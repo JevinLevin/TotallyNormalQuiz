@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,11 @@ public class MATHManager : MonoBehaviour
     {
         inputField.Select();
         inputField.ActivateInputField();
+    }
+
+    private void OnEnable()
+    {
+        questionScript.OnReset += OnReset;
     }
 
     public void OnReset()

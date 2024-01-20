@@ -55,7 +55,7 @@ public class REACTIONAnswer : MonoBehaviour
         Activated = true;
         
         currentTween.Kill();
-        currentTween = GameManager.Instance.FadeImageColor(GameManager.Instance.buttonRed, fadeInTime, answerScript.frontImage).SetEase(Ease.Linear);
+        currentTween = GameManager.FadeImageColor(GameManager.ButtonRed, fadeInTime, answerScript.frontImage).SetEase(Ease.Linear);
 
         Delayed = false;
         currentTime = 0.0f;
@@ -69,9 +69,9 @@ public class REACTIONAnswer : MonoBehaviour
         if (!Activated || Delayed) return;
         
         currentTween.Kill();
-        currentTween = GameManager.Instance.FadeImageColor(defaultColor, 0.15f, answerScript.frontImage);
+        currentTween = GameManager.FadeImageColor(defaultColor, 0.15f, answerScript.frontImage);
 
-        GameManager.Instance.FadeImageColorInOut(GameManager.Instance.buttonGreen, 0.15f, 0.25f, answerScript.backImage);
+        GameManager.FadeImageColorInOut(GameManager.ButtonGreen, 0.15f, 0.25f, answerScript.backImage);
 
         Delayed = true;
         activateDelay = 0.0f;

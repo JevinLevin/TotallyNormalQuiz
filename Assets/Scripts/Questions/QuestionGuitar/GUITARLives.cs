@@ -27,7 +27,7 @@ public class GUITARLives : MonoBehaviour
 
     private void RemoveLife(Image life)
     {
-        life.DOColor(GameManager.Instance.buttonRed, 0.5f);
+        life.DOColor(GameManager.ButtonRed, 0.5f);
         //life.DOFade(0.5f, 0.5f);
     }
 
@@ -43,7 +43,7 @@ public class GUITARLives : MonoBehaviour
     {
         foreach (Image life in lives)
         {
-            life.DOColor(GameManager.Instance.buttonGreen, 0.5f);
+            life.DOColor(GameManager.ButtonGreen, 0.5f);
         }
     }
 }

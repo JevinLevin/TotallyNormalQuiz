@@ -9,34 +9,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fba735f5f93f92a40a5e9634f17185bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 03cfe22e31adbf347b35457782d822a4, type: 3}
   m_Name: 3
   m_EditorClassIdentifier: 
   answers:
-  - answer: Circle
+  - answer: 00-Circle
     correct: 0
-    originalIndex: 0
-  - answer: Triangle
+  - answer: 01-Triangle
     correct: 0
-    originalIndex: 1
-  - answer: Square
+  - answer: 02-Square
     correct: 0
-    originalIndex: 2
-  - answer: Pentagon
+  - answer: 03-Pentagon
     correct: 0
-    originalIndex: 3
-  - answer: Hexagon
+  - answer: 04-Hexagon
     correct: 0
-    originalIndex: 4
-  - answer: Heptagon
+  - answer: 05-Heptagon
     correct: 0
-    originalIndex: 5
-  - answer: Octogon
+  - answer: 06-Octogon
     correct: 0
-    originalIndex: 6
-  - answer: Nonagon
+  - answer: 07-Nonagon
     correct: 0
-    originalIndex: 7
-  - answer: Decagon
+  - answer: 08-Decagon
     correct: 0
-    originalIndex: 8

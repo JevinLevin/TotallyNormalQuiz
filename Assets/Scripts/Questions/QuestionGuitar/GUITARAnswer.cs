@@ -55,7 +55,7 @@ public class GUITARAnswer : MonoBehaviour
     {
         // Cancels the current tween if its already flashing red
         DOTween.Complete(answerScript.frontImage);
-        GameManager.Instance.FadeImageColorInOut(GameManager.Instance.buttonRed, 0.075f, 0.2f, answerScript.frontImage);
+        GameManager.FadeImageColorInOut(GameManager.ButtonRed, 0.075f, 0.2f, answerScript.frontImage);
         
 
         // Main fail input function
@@ -67,7 +67,7 @@ public class GUITARAnswer : MonoBehaviour
     {
         // Cancels the current tween if its already flashing red
         DOTween.Complete(answerScript.frontImage);
-        GameManager.Instance.FadeImageColorInOut(GameManager.Instance.buttonGreen, 0.075f, 0.2f, answerScript.frontImage);
+        GameManager.FadeImageColorInOut(GameManager.ButtonGreen, 0.075f, 0.2f, answerScript.frontImage);
        
         // Remove correct input from queue
         currentInputs.Dequeue().CorrectInput();

@@ -6,18 +6,19 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
+using UnityEngine.UI;
 
 public class QuestionGeneric : MonoBehaviour
 {
 
     [Header("Components")]
-    [SerializeField] private CanvasGroup canvasGroup;
+    private CanvasGroup canvasGroup;
+    private Canvas canvas;
     [SerializeField] private CanvasGroup answerCanvasGroup;
     [SerializeField] private RectTransform titleTransform;
     [SerializeField] private RectTransform answerTransform;
     [SerializeField] private TextMeshProUGUI questionNumber;
     [SerializeField] private TextMeshProUGUI questionText;
-    [SerializeField] private Canvas canvas;
     
 
     [Header("Attributes")]
@@ -26,10 +27,11 @@ public class QuestionGeneric : MonoBehaviour
     [SerializeField] private Color colourCorrect;
     [SerializeField] private bool randomisePlacements;
     
-    [Header("Events")]
-    [SerializeField] public UnityEvent onReset;
-    [SerializeField] public UnityEvent onStart;
-    [SerializeField] public UnityEvent onFail;
+    // Events
+    public Action OnReset;
+    public Action OnStart;
+    public Action OnFail;
+    public Action OnWin;
 
     public List<AnswerGeneric> Answers { get; private set; }
 
@@ -37,22 +39,16 @@ public class QuestionGeneric : MonoBehaviour
 
     private void Awake()
     {
+        canvas = GetComponent<Canvas>();
+        canvasGroup = GetComponent<CanvasGroup>();
         Answers = GetComponentsInChildren<AnswerGeneric>(true).ToList();
     }
 
     void Start()
     {
         canvas.worldCamera = GameManager.Instance.QuestionCamera;
-
-
-        //onReset?.Invoke();
-        //onStart?.Invoke();
-        Reset();
-    }
-
-    void Update()
-    {
         
+        Reset();
     }
 
     void OnDestroy()
@@ -69,12 +65,12 @@ public class QuestionGeneric : MonoBehaviour
 
     private void ClickAnswerWrong(AnswerGeneric answer)
     {
-        GameManager.Instance.FadeImageColor(colourIncorrect, 0.25f, answer.frontImage);
+        GameManager.FadeImageColor(colourIncorrect, 0.25f, answer.frontImage);
     }
 
     private void ClickAnswerCorrect(AnswerGeneric answer)
     {
-        GameManager.Instance.FadeImageColor(colourCorrect, 0.25f, answer.frontImage);
+        GameManager.FadeImageColor(colourCorrect, 0.25f, answer.frontImage);
     }
 
     public void ClickAnswerGenericEvent(AnswerGeneric answer)
@@ -117,12 +113,13 @@ public class QuestionGeneric : MonoBehaviour
     public void GenericAnswerCorrect(bool fadeAnswers = false)
     {
         GenericAnswer();
+        
+        OnWin?.Invoke();
 
         Invoke("NextQuestion", 1.5f);
 
         if (!fadeAnswers) return;
-        foreach (AnswerGeneric answer in Answers)
-            GameManager.Instance.FadeImageColor(colourCorrect, 0.25f, answer.frontImage);
+        FlashAnswersFront(GameManager.FadeImageColor, colourCorrect, 0.25f);
 
     }
 
@@ -130,13 +127,13 @@ public class QuestionGeneric : MonoBehaviour
     {
         GenericAnswer();
 
-        onFail?.Invoke();
+        //onFail?.Invoke();
+        OnFail?.Invoke();
 
         StartCoroutine(RestartQuestion());
         
         if (!fadeAnswers) return;
-        foreach (AnswerGeneric answer in Answers)
-            GameManager.Instance.FadeImageColor(colourIncorrect, 0.25f, answer.frontImage);
+        FlashAnswersFront(GameManager.FadeImageColor, colourIncorrect, 0.25f);
     }
 
     private void FadeAnswers()
@@ -156,7 +153,7 @@ public class QuestionGeneric : MonoBehaviour
         canvasGroup.DOFade(1.0f,0.75f).SetEase(Ease.InCubic).SetId("questionTween");
     }
 
-    public IEnumerator RestartQuestion()
+    private IEnumerator RestartQuestion()
     {
         yield return new WaitForSeconds(0.5f);
 
@@ -165,17 +162,17 @@ public class QuestionGeneric : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         Reset();
-        onReset?.Invoke();
+        OnReset?.Invoke();
         FadeQuestionIn();
 
         yield return new WaitForSeconds(0.75f);
 
         SetInteractable(true);
-        onStart?.Invoke();
+        OnStart?.Invoke();
 
     }
 
-    private void Reset()
+    protected virtual void Reset()
     {
         DOTween.Kill("endingFadeTween");
 
@@ -216,8 +213,8 @@ public class QuestionGeneric : MonoBehaviour
         titleTransform.DOLocalMoveX(-2000,0.75f).SetEase(Ease.InOutCubic).SetId("questionTween");
         SetInteractable(false);
         
-        onReset?.Invoke();
-        onStart?.Invoke();
+        OnReset?.Invoke();
+        OnStart?.Invoke();
 
         GameManager.Instance.NextQuestion();
     }
@@ -246,6 +243,38 @@ public class QuestionGeneric : MonoBehaviour
     public void SetQuestionTitle(string value)
     {
         questionText.text = value;
+    }
+    
+    
+    
+    // I hate that this is the only way i could think of doing this
+    protected void FlashAnswersBack(Func<Color,float,Image,Tween> flashEvent, Color flashColor, float flashLength)
+    {
+        foreach (AnswerGeneric answer in Answers)
+        {
+            flashEvent.Invoke(flashColor, flashLength, answer.backImage);
+        }
+    }
+    protected void FlashAnswersBack(Func<Color,float,float,Image,Tween> flashEvent, Color flashColor, float flashInLength,float flashOutLength)
+    {
+        foreach (AnswerGeneric answer in Answers)
+        {
+            flashEvent.Invoke(flashColor, flashInLength, flashOutLength, answer.backImage);
+        }
+    }
+    protected void FlashAnswersFront(Func<Color,float,Image,Tween> flashEvent, Color flashColor, float flashLength)
+    {
+        foreach (AnswerGeneric answer in Answers)
+        {
+            flashEvent.Invoke(flashColor, flashLength, answer.frontImage);
+        }
+    }
+    protected void FlashAnswersFront(Func<Color,float,float,Image,Tween> flashEvent, Color flashColor, float flashInLength,float flashOutLength)
+    {
+        foreach (AnswerGeneric answer in Answers)
+        {
+            flashEvent.Invoke(flashColor, flashInLength, flashOutLength, answer.frontImage);
+        }
     }
 
 

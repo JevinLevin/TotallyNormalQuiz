@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -12,9 +13,10 @@ public class VOWELManager : MonoBehaviour
     
     private bool solving;
 
-    void Start()
+    private void OnEnable()
     {
-        
+        questionScript.OnReset += OnReset;
+        questionScript.OnStart += OnStart;
     }
 
     public void OnReset()
