@@ -11,17 +11,22 @@ public class COLORMATCHManager : MonoBehaviour
 {
     private QuestionMultiGeneric questionMultiScript;
     [SerializeField] private TextMeshProUGUI phaseText;
-    private GameManager.GameColors[] possibleColors;
+    //private GameManager.GameColors[] possibleColors;
+
+    private COLORMATCHAnswer[] answers;
 
     private void Awake()
     {
         questionMultiScript = GetComponent<QuestionMultiGeneric>();
+
+        answers = GetComponentsInChildren<COLORMATCHAnswer>();
     }
 
     private void OnEnable()
     {
         questionMultiScript.OnSetAnswers += SetCorrect;
         questionMultiScript.OnSetQuestion += SetColours;
+        questionMultiScript.OnWin += StopShift;
     }
 
     private void SetCorrect(MultiAnswer[] answers)
@@ -41,62 +46,90 @@ public class COLORMATCHManager : MonoBehaviour
         int currentPhase = questionMultiScript.CurrentPhase;
         if (currentPhase == 0)
             return;
-
-        if (currentPhase == 1)
-            possibleColors = ((GameManager.GameColors[])System.Enum.GetValues(typeof(GameManager.GameColors))).Take(5).ToArray();
-        if (currentPhase == 5)
-            possibleColors = (GameManager.GameColors[])System.Enum.GetValues(typeof(GameManager.GameColors));
-
-
-        int count = 0;
-        foreach (AnswerGeneric answer in questionMultiScript.Answers)
+        
+        List<GameManager.GameColors> possibleColors;
+        if (currentPhase is (>= 1 and <= 2) or >= 5)
         {
-            GameManager.GameColors randomColor = SetRandomColor(answer, count, getAnswer => getAnswer.GetTextColor());
-            answer.SetTextColor(GameManager.ColorDictionary[randomColor]);
-
-            if (currentPhase >= 3)
+            possibleColors = GetPossibleColors(currentPhase).ToList();
+            // If it breaks the loop then its all good
+            for (int i = 0; i < questionMultiScript.Answers.Count; i++)
             {
-                GameManager.GameColors randomColor2 = SetRandomColor(answer, count,  getAnswer => getAnswer.frontImage.color);
-                answer.frontImage.color = GameManager.ColorDictionary[randomColor2];
+                questionMultiScript.Answers[i].SetTextColor(GameManager.ColorDictionary[possibleColors[i]]);
+            }
+        }
+        if (currentPhase >= 3)
+        {
+            possibleColors = GetPossibleColors(currentPhase).ToList();
+            // If it breaks the loop then its all good
+            for (int i = 0; i < questionMultiScript.Answers.Count; i++)
+            {
+                questionMultiScript.Answers[i].frontImage.color = GameManager.ColorDictionary[possibleColors[i]];
+            }
+        }
+
+        if (currentPhase >= 7)
+        {
+            foreach (COLORMATCHAnswer answerScript in answers)
+            {
+                answerScript.isShifting = true;
+                if(currentPhase == 7)
+                    answerScript.hueSpeed = 3;
+                if(currentPhase == 8)
+                    answerScript.hueSpeed = 2;
+                if(currentPhase == 9)
+                    answerScript.hueSpeed = 1f;
+            }
+        }
+    }
+
+    private void StopShift()
+    {
+        foreach (COLORMATCHAnswer answerScript in answers)
+        {
+            answerScript.Reset();
+        }
+    }
+
+    private GameManager.GameColors[] GetPossibleColors(int currentPhase = 0)
+    {
+        bool valid = false;
+        int limit = 100;
+
+        GameManager.GameColors[] possibleColors = new GameManager.GameColors[questionMultiScript.Answers.Count];
+
+        while (!valid && limit > 0)
+        {
+            limit--;
+            
+            if (currentPhase >= 1)
+                possibleColors = ((GameManager.GameColors[])Enum.GetValues(typeof(GameManager.GameColors))).Take(4).ToArray();
+            if (currentPhase >= 5)
+                possibleColors = (GameManager.GameColors[])Enum.GetValues(typeof(GameManager.GameColors));
+
+            possibleColors.Shuffle();
+            
+            valid = true;
+            
+            for (int i = 0; i < questionMultiScript.Answers.Count; i++)
+            {
+                AnswerGeneric answer = questionMultiScript.Answers[i];
+                GameManager.GameColors color = possibleColors[i];
+                
+                // If the color matches the text
+                if (answer.GetText() == color.ToString())
+                    valid = false;
+        
+                // If the text color is already the same
+                if (answer.GetTextColor() == GameManager.ColorDictionary[color])
+                    valid = false;
+                
+                // If the front color is already the same
+                if (answer.frontImage.color == GameManager.ColorDictionary[color])
+                    valid = false;
             }
 
-            count++;
         }
-    }
 
-    private GameManager.GameColors SetRandomColor(AnswerGeneric answer, int count, Func<AnswerGeneric, Color> getColor)
-    {
-        GameManager.GameColors randomColor;
-        int failSafe = 0;
-        do
-        {
-            randomColor = GetRandomColor();
-            failSafe++;
-        }
-        while ( failSafe < 25 && CheckDuplicateColors(answer, randomColor, count, getColor));
-        return randomColor;
-    }
-
-    private bool CheckDuplicateColors(AnswerGeneric answer, GameManager.GameColors color, int index, Func<AnswerGeneric, Color> CheckColor)
-    {
-        // If the color matches the text
-        if (answer.GetText() == color.ToString())
-            return true;
-        
-        // If the text color is already the same
-        if (questionMultiScript.Answers[index].GetTextColor() == GameManager.ColorDictionary[color])
-            return true;
-
-
-        // If the color has already been used
-        if (questionMultiScript.Answers.Any( currentAnswer => CheckColor?.Invoke(currentAnswer) == GameManager.ColorDictionary[color]))
-            return true;
-        
-        return false;
-    }
-    
-    private GameManager.GameColors GetRandomColor()
-    {
-        return possibleColors[Random.Range(0, possibleColors.Length)];
+        return possibleColors;
     }
 }
