@@ -40,13 +40,13 @@ public class ButtonAnimations : MonoBehaviour, IPointerEnterHandler, IPointerExi
         if(!disableColor)
         {
             DOTween.Kill(buttonImage);
-            buttonImage.DOColor(hoverButtonColor, 0.1f).SetEase(Ease.OutSine).SetId("hoverTween");
+            buttonImage.DOColor(hoverButtonColor, 0.1f).SetEase(Ease.OutSine).SetId("answerColorTween");
         }
 
         if (!disableScale)
         {
             DOTween.Kill(rectTransform);
-            rectTransform.DOScale(1.03f, 0.1f);
+            rectTransform.DOScale(1.03f, 0.1f).SetId("answerScaleTween");;
         }
     }
 
@@ -56,12 +56,12 @@ public class ButtonAnimations : MonoBehaviour, IPointerEnterHandler, IPointerExi
         
         if (!disableColor)
         {
-            buttonImage.DOColor(buttonColor, 0.4f).SetEase(Ease.InSine).SetId("hoverTween");
+            buttonImage.DOColor(buttonColor, 0.4f).SetEase(Ease.InSine).SetId("answerColorTween");
         }
 
         if (!disableScale)
         {
-            rectTransform.DOScale(1f, 0.2f);
+            rectTransform.DOScale(1f, 0.2f).SetId("answerScaleTween");;
         }
     }
 }

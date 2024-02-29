@@ -32,6 +32,8 @@ public class QuestionGeneric : MonoBehaviour
     public Action OnStart;
     public Action OnFail;
     public Action OnWin;
+    
+    public bool IsActive { get; private set; }
 
     public List<AnswerGeneric> Answers { get; private set; }
 
@@ -49,6 +51,8 @@ public class QuestionGeneric : MonoBehaviour
         canvas.worldCamera = GameManager.Instance.QuestionCamera;
         
         Reset();
+        
+        IsActive = true;
     }
 
     void OnDestroy()
@@ -108,6 +112,11 @@ public class QuestionGeneric : MonoBehaviour
 
         // Fades the answer canvas slightly
         FadeAnswers();
+        
+        // Stop any button color animations
+        DOTween.Kill("answerColorTween");
+        
+        IsActive = false;
     }
 
     public void GenericAnswerCorrect(bool fadeAnswers = false)
@@ -168,6 +177,7 @@ public class QuestionGeneric : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
 
         SetInteractable(true);
+        IsActive = true;
         OnStart?.Invoke();
 
     }
@@ -222,6 +232,7 @@ public class QuestionGeneric : MonoBehaviour
     public void NewQuestion()
     {
         SetInteractable(false);
+        IsActive = false;
 
         Vector3 answerPosition = answerTransform.localPosition;
         Vector3 titlePosition = titleTransform.localPosition;
@@ -237,6 +248,7 @@ public class QuestionGeneric : MonoBehaviour
     private void NewQuestionEnd()
     {
         SetInteractable(true);
+        IsActive = true;
         GameManager.Instance.RemoveOldQuestion();
     }
 
