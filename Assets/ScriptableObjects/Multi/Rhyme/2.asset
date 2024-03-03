@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03cfe22e31adbf347b35457782d822a4, type: 3}
+  m_Name: 2
+  m_EditorClassIdentifier: 
+  answers:
+  - answer: Eight
+    correct: 1
+  - answer: Bait
+    correct: 1
+  - answer: Treat
+    correct: 0
+  - answer: Wheat
+    correct: 0
+  - answer: Feet
+    correct: 0
+  - answer: Height
+    correct: 0
+  - answer: Brat
+    correct: 0
+  - answer: Strat
+    correct: 0
+  - answer: Sweat
+    correct: 0
+  - answer: Sleight
+    correct: 0
+  - answer: Night
+    correct: 0
